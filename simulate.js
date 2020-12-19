@@ -112,5 +112,6 @@ async function polkadex_market_data() {
                 new BN((parseFloat(quantity) * UNIT).toString())).signAndSend(alice, {nonce: alice_nonce});
             alice_nonce = alice_nonce + 1;
         }
+        console.log("Nonce: ",alice_nonce)
     });
 }
