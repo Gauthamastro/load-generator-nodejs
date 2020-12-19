@@ -99,19 +99,22 @@ async function polkadex_market_data() {
 
     // Let's simulate some traders
     let alice_nonce = 3;
-
+    let odd_counter = 1;
     binance.websockets.trades(['BTCUSDT'], (trades) => {
         let {e: eventType, E: eventTime, s: symbol, p: price, q: quantity, m: maker, a: tradeId} = trades;
         // console.info(symbol+" trade update. price: "+price+", quantity: "+quantity+", BUY: "+maker);
-        if (maker === true) {
-            api.tx.polkadex.submitOrder("BidLimit", tradingPairID, new BN((parseFloat(price) * UNIT).toString()),
-                new BN((parseFloat(quantity) * UNIT).toString())).signAndSend(alice, {nonce: alice_nonce});
-            alice_nonce = alice_nonce + 1;
-        } else {
-            api.tx.polkadex.submitOrder("AskLimit", tradingPairID,  new BN((parseFloat(price) * UNIT).toString()),
-                new BN((parseFloat(quantity) * UNIT).toString())).signAndSend(alice, {nonce: alice_nonce});
-            alice_nonce = alice_nonce + 1;
+        if(odd_counter%2 ===0){
+            if (maker === true) {
+                api.tx.polkadex.submitOrder("BidLimit", tradingPairID, new BN((parseFloat(price) * UNIT).toString()),
+                    new BN((parseFloat(quantity) * UNIT).toString())).signAndSend(alice, {nonce: alice_nonce});
+                alice_nonce = alice_nonce + 1;
+            } else {
+                api.tx.polkadex.submitOrder("AskLimit", tradingPairID,  new BN((parseFloat(price) * UNIT).toString()),
+                    new BN((parseFloat(quantity) * UNIT).toString())).signAndSend(alice, {nonce: alice_nonce});
+                alice_nonce = alice_nonce + 1;
+            }
+            console.log("Nonce: ",alice_nonce)
+            odd_counter = odd_counter +1;
         }
-        console.log("Nonce: ",alice_nonce)
     });
 }
