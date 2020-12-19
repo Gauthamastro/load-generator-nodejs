@@ -20,7 +20,7 @@ const binance = new Binance().options({
 });
 
 
-const wsProvider = new WsProvider('ws://localhost:9944');
+const wsProvider = new WsProvider('ws://localhost:9945');
 polkadex_market_data().then();
 
 
