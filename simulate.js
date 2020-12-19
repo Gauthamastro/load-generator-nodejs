@@ -115,6 +115,8 @@ async function polkadex_market_data() {
             }
             console.log("Nonce: ",alice_nonce)
             odd_counter = odd_counter +1;
+        }else{
+            odd_counter = odd_counter +1
         }
     });
 }
