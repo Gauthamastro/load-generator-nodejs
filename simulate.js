@@ -103,7 +103,7 @@ async function polkadex_market_data() {
     binance.websockets.trades(['BTCUSDT'], (trades) => {
         let {e: eventType, E: eventTime, s: symbol, p: price, q: quantity, m: maker, a: tradeId} = trades;
         // console.info(symbol+" trade update. price: "+price+", quantity: "+quantity+", BUY: "+maker);
-        if(odd_counter%2 ===0){
+        if(odd_counter%3===0){
             if (maker === true) {
                 api.tx.polkadex.submitOrder("BidLimit", tradingPairID, new BN((parseFloat(price) * UNIT).toString()),
                     new BN((parseFloat(quantity) * UNIT).toString())).signAndSend(alice, {nonce: alice_nonce});
